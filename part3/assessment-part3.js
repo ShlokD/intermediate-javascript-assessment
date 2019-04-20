@@ -14,6 +14,9 @@
 
 // CODE HERE...
 
+const callBinding = (magicAnimals, updateAnimal, id) => {
+  return updateAnimal.call(magicAnimals.find(animal => animal.id === id), "Trogdor")
+}
 
 
 // *************
@@ -29,6 +32,9 @@
 
 // CODE HERE...
 
+const applyBinding = (magicAnimals, updateAnimal, id) => {
+  return updateAnimal.apply(magicAnimals.find(animal => animal.id === id), ["being majestic", "eating rainbows"])
+}
 
 
 // *************
@@ -49,6 +55,15 @@ var foo;
 
 // CODE HERE...
 
+const promiseMe = ($q) => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      foo = "bar";
+      resolve(foo)
+    }, 20)
+  })
+}
+
 
 
 // *************
@@ -64,3 +79,14 @@ var foo;
 // and then resolve the array as you complete your promise.
 
 // CODE HERE...
+
+const emailList = ($q, $http) => {
+  return new Promise((resolve) => {
+    $http({
+      method: 'GET',
+      url: '/api/users'
+    }).then(res => {
+      resolve(res.data.map(user => user.email));
+    })
+  })
+}

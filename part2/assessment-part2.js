@@ -42,8 +42,13 @@ function noWeakLink() {
   return $http({
     method: 'GET',
     url: '/api/users'
-  })
-  // CODE HERE...
+  }).then(res => {
+    firstUser = res.data[0]
+    return res;
+  }).then(res => {
+    thirdUser = res.data[2]
+    return res.data[9]
+  });
 
 }
 
@@ -75,7 +80,7 @@ function large() {
 }
 // CODE HERE...
 
-
+const boundToElephant = large.bind(elephant);
 
 // *************
 // * PROBLEM 3 *
@@ -89,6 +94,9 @@ function large() {
 
 // CODE HERE...
 
+const deathStar = (capacity, crew) => {
+  return capacity.bind(crew);
+}
 
 
 // *************
@@ -104,6 +112,7 @@ function large() {
 
 // CODE HERE...
 
+const accountingOffice = (assets) => (liabilities) => liabilities + assets;
 
 
 // *************
@@ -128,6 +137,19 @@ function large() {
 // };
 
 // CODE HERE...
+
+const forgetter = (name) => {
+  const store = {
+    [name]: []
+  }
+
+  return function rememberall(item) {
+    store[name].push(item)
+    return { name, remember: store[name]}
+  }
+}
+
+
 
 
 
@@ -156,3 +178,33 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+
+
+const frodo = (startingHungerValue, startingDangerValue) => {
+  var hobbit = {
+    hunger: startingHungerValue,
+    danger: startingDangerValue
+  }
+
+  const check = () => {
+    if(hobbit.hunger < 0) hobbit.hunger = 0;
+    if(hobbit.danger < 0) hobbit.danger = 0;
+    if(hobbit.hunger > 100) hobbit.hunger = 100;
+    if(hobbit.danger > 100) hobbit.danger = 100;
+  }
+
+  return {
+    dinnerOverFire: () => {
+      hobbit.hunger -= 25;
+      hobbit.danger += 40;
+      check();
+      return hobbit;
+    },
+    hidingInBush: () => {
+      hobbit.danger -= 20;
+      hobbit.hunger += 35;
+      check()
+      return hobbit;
+    }
+  }
+}
